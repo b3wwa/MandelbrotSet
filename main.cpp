@@ -1,5 +1,5 @@
 #include <SFML/Graphics.hpp>
-//#include "ComplexPlane.h"
+#include "ComplexPlane.h"
 #include <iostream>
 
 using namespace sf;
@@ -16,12 +16,7 @@ int main()
 	//the resolution is divided by 2 for speed, can change later to actual size
 	RenderWindow window(VideoMode(resWidth / 2, resHeight / 2), "SFML window", Style::Default);
 
-	/*
-
-		Construct ComplexPlane here!!!
-		need to implement ComplexPlane.h and ComplexPlane.cpp
-
-	*/
+	ComplexPlane(1, 1);
 
 	//Construct Font object
 	Font font;
@@ -39,8 +34,10 @@ int main()
 		{
 			// Request for closing the window
 			if (event.type == Event::Closed)
+			{
 				window.close();
-
+			}
+			
 			/*
 			
 				MAIN LOOP GOES HERE!!!
@@ -58,8 +55,6 @@ int main()
 		//Clear RenderWindow
 		window.clear();
 
-		
- 
 		//Draw Text object
 		window.draw(text);
  

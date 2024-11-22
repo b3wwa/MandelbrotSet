@@ -7,16 +7,51 @@ ComplexPlane::ComplexPlane(int pixelWidth, int pixelHeight)
 	//hopefully works but its integer division idk
 	m_aspectRatio = VideoMode::getDesktopMode().height / VideoMode::getDesktopMode().width;
 	m_plane_center = { 0, 0 };
+	m_plane_size = { BASE_WIDTH, BASE_HEIGHT * m_aspectRatio };
+	m_zoomCount = 0;
+	m_state = State::CALCULATING;
+	VertexArray(Points, pixelWidth * pixelHeight);
+}
 
-	/*
-		Assign m_plane_size with{ BASE_WIDTH, BASE_HEIGHT * m_aspectRatio }
-		Assign m_zoomCount with 0
-		Assign m_State with State::CALCULATING to be ready for the initial screen
-		Initialize VertexArray
-		We will use this to draw a color for each pixel
-		Set its primitive type to Points
-		Resize it to pixelWidth* pixelHeight
-	*/
+void ComplexPlane::draw(RenderTarget& target, RenderStates states) const
+{
+	target.draw(m_vArray);
+}
+
+void ComplexPlane::updateRender()
+{
+	if (m_state == State::CALCULATING)
+	{
+		for (int i = 0; i < m_pixel_size.x; i++)
+		{
+			for (int j = 0; j < m_pixel_size.y; j++)
+			{
+				/*
+				
+					update render function
+
+				*/
+			}
+		}
+	}
+}
+
+void ComplexPlane::zoomIn()
+{
+	m_zoomCount++;
+	int xSize = BASE_WIDTH * pow(BASE_ZOOM, m_zoomCount);
+	int ySize = BASE_HEIGHT * m_aspectRatio * pow(BASE_ZOOM, m_zoomCount);
+	m_plane_size = { xSize, ySize };
+	m_state == State::CALCULATING;
+}
+
+void ComplexPlane::zoomOut()
+{
+	m_zoomCount--;
+	int xSize = BASE_WIDTH * pow(BASE_ZOOM, m_zoomCount);
+	int ySize = BASE_HEIGHT * m_aspectRatio * pow(BASE_ZOOM, m_zoomCount);
+	m_plane_size = { xSize, ySize };
+	m_state == State::CALCULATING;
 }
 
 /*
@@ -33,18 +68,6 @@ Vector2f ComplexPlane::mapPixelToCoords(Vector2i mousePixel)
 
 }
 
-const void ComplexPlane::draw(RenderTarget& target, RenderStates states)
-{
-
-}
-void ComplexPlane::zoomIn()
-{
-
-}
-void ComplexPlane::zoomOut()
-{
-
-}
 void ComplexPlane::setCenter(Vector2i mousePixel)
 {
 
@@ -54,10 +77,6 @@ void ComplexPlane::setMouseLocation(Vector2i mousePixel)
 
 }
 void ComplexPlane::loadText(Text& text)
-{
-
-}
-void ComplexPlane::updateRender()
 {
 
 }
