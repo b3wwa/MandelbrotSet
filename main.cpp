@@ -1,3 +1,5 @@
+//Isabella and Noor
+//Isabella's version includes: different colors and font choice, in depth comments, and multithreading that may or may not be implemented properly
 //Include important C++ libraries here
 #include <SFML/Graphics.hpp>
 #include "ComplexPlane.h"
@@ -14,7 +16,7 @@ int main()
 	//Create complexplane object
 	ComplexPlane plane(pixelWidth, pixelHeight);
 	Font font;
-	if (!font.loadFromFile("timesNewRoman.ttf"))
+	if (!font.loadFromFile("winterLemon.ttf"))
 	{
 		cout << "Can not load the file!" << endl;
 	}
@@ -36,8 +38,15 @@ int main()
 				if (event.mouseButton.button == sf::Mouse::Left)
 				{
 					Vector2i center = { event.mouseButton.x, event.mouseButton.y };
-					plane.zoomIn();
-					plane.setCenter(center);
+
+					//multithreading
+					thread th1(&ComplexPlane::zoomIn, &plane);
+					th1.join();
+
+					//multithreading
+					thread th2(&ComplexPlane::setCenter, &plane, center);
+					th2.join();
+
 					update = true;
 				}
 
@@ -45,8 +54,15 @@ int main()
 				if (event.mouseButton.button == sf::Mouse::Right)
 				{
 					Vector2i center = { event.mouseButton.x, event.mouseButton.y };
-					plane.zoomOut();
-					plane.setCenter(center);
+
+					//multithreading
+					thread th1(&ComplexPlane::zoomOut, &plane);
+					th1.join();
+
+					//multithreading
+					thread th2(&ComplexPlane::setCenter, &plane, center);
+					th2.join();
+
 					update = true;
 				}
 
@@ -73,7 +89,9 @@ int main()
 		//If zooming in or out, call update render
 		if (update)
 		{
-			plane.updateRender();
+			//multithreading
+			thread th(&ComplexPlane::updateRender, &plane);
+			th.join();
 		}
 
 		//Display scene

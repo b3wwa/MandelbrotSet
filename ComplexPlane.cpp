@@ -56,7 +56,8 @@ void ComplexPlane::loadText(Text& text)
 {
 	stringstream ss;
 	text.setCharacterSize(16);
-	text.setColor(Color::Yellow);
+	text.setColor(Color::White);
+	text.setPosition(20, 20);
 	ss << "Mandelbrot set" << endl;
 	ss << "Center: (" << m_plane_center.x << "," << m_plane_center.y << ")" << endl;
 	ss << "Cursor: (" << m_mouseLocation.x << "," << m_mouseLocation.y << ")" << endl;
@@ -91,6 +92,7 @@ void ComplexPlane::updateRender()
 				
 				Vector2i pixelCoord(j, i);
 				Vector2f coords = mapPixelToCoords(pixelCoord);
+
 				size_t iterations = countIterations(coords);
 
 				RGB color{ 0, 0, 0 };
@@ -125,7 +127,7 @@ int ComplexPlane::countIterations(Vector2f coord)
 //Convert iteration value to an RGB value
 //If count is at max (64), set RGB value to (0, 0, 0) (black)
 //Else, RGB value is calculated by multiplying and modding the pixel's iteration value
-	//High R value, low G value, a little higher B value = mostly red and a bit of purple, going for a lava vibe
+	//High R value, low G value, a little higher B value = mostly red and purple 
 RGB ComplexPlane::iterationsToRGB(size_t count, RGB pixelColor)
 {
 	if (count == MAX_ITER)
@@ -134,9 +136,9 @@ RGB ComplexPlane::iterationsToRGB(size_t count, RGB pixelColor)
 	}
 	else
 	{
-		pixelColor.r = (count * 25) % 256;
-		pixelColor.g = (count * 5) % 60;
-		pixelColor.b = (count * 15) % 60;
+		pixelColor.r = (count * 20) % 256;
+		pixelColor.g = (count * 5) % 20;
+		pixelColor.b = (count * 15) % 100;
 	}
 	return pixelColor;
 }

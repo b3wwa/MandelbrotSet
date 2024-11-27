@@ -4,6 +4,7 @@
 #include <cmath>
 #include <iostream>
 #include <sstream>
+#include <thread>
 using namespace sf;
 using namespace std;
 
